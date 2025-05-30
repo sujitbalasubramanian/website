@@ -3,8 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     <nav role="navigation" class="site-nav">
       <ul>
         <li>Sujit Balasubramanian</li>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about.html">About</a></li>
+        <li><a href="/">en</a></li>
+        <li><a href="/ta.html">ta</a></li>
+        <li><a href="/en/about.html">About</a></li>
       </ul>
     </nav>
   `;
