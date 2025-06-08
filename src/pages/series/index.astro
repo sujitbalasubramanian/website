@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+
+const seriesList = (await getCollection("series"))
+  .filter((series) => series.data.into)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section>
+        <ul>
+          {
+            seriesList.map((series) => (
+              <li>
+                <div class="flex gap-2 mb-2">
+                  <FormattedDate date={series.data.pubDate} />
+                  <a
+                    href={`/series/${series.data.series}/`}
+                    class="flex gap-4 a-link"
+                  >
+                    <h4 class="title">{series.data.title}</h4>
+                  </a>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

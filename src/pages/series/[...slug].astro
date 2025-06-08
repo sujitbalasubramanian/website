@@ -1,0 +1,51 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection, render } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import Header from "../../components/Header.astro";
+
+export async function getStaticPaths() {
+  const series = await getCollection("series");
+  return series.map((entry) => {
+    return {
+      params: {
+        slug: entry.data.into
+          ? entry.data.series
+          : entry.data.series + "/" + entry.data.title,
+      },
+      props: entry,
+    };
+  });
+}
+
+type Props = CollectionEntry<"series">;
+
+const entry: Props = Astro.props;
+
+const { Content } = await render(entry);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={entry.data.title} description={entry.data.description} />
+  </head>
+  <body>
+    <Header />
+    <main class="px-4 max-w-screen-md mx-auto my-10">
+      <article>
+        <h1 class="text-3xl font-bold mb-2">{entry.data.title}</h1>
+        <FormattedDate date={entry.data.pubDate} />
+        {
+          entry.data.part && (
+            <p>
+              <strong>Part {entry.data.part}</strong>
+            </p>
+          )
+        }
+        <Content />
+      </article>
+    </main>
+  </body>
+</html>
