@@ -6,8 +6,8 @@ import FormattedDate from "../../components/FormattedDate.astro";
 import Header from "../../components/Header.astro";
 
 export async function getStaticPaths() {
-  const series = await getCollection("series");
-  return series.map((entry) => {
+  const tutorial = await getCollection("tutorials");
+  return tutorial.map((entry) => {
     return {
       params: {
         slug: entry.data.into
@@ -19,7 +19,7 @@ export async function getStaticPaths() {
   });
 }
 
-type Props = CollectionEntry<"series">;
+type Props = CollectionEntry<"tutorials">;
 
 const entry: Props = Astro.props;
 

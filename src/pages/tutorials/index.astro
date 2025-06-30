@@ -5,8 +5,8 @@ import FormattedDate from "../../components/FormattedDate.astro";
 import Header from "../../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
-const seriesList = (await getCollection("series"))
-  .filter((series) => series.data.into)
+const tutorials = (await getCollection("tutorials"))
+  .filter((tutorial) => tutorial.data.into)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
@@ -21,16 +21,17 @@ const seriesList = (await getCollection("series"))
       <section>
         <ul>
           {
-            seriesList.map((series) => (
+            tutorials.map((tutorial) => (
               <li>
-                <div class="flex gap-2 mb-2">
-                  <FormattedDate date={series.data.pubDate} />
+                <div class="flex flex-wrap gap-2 mb-2 items-center">
                   <a
-                    href={`/series/${series.data.series}/`}
+                    href={`/tutorials/${tutorial.data.series}/`}
                     class="flex gap-4 a-link"
                   >
-                    <h4 class="title">{series.data.title}</h4>
+                    <h4 class="title text-xl">{tutorial.data.title}</h4>
                   </a>
+                  <p class="text-gray-600">{tutorial.data.description}</p>
+                  <FormattedDate date={tutorial.data.pubDate} />
                 </div>
               </li>
             ))
